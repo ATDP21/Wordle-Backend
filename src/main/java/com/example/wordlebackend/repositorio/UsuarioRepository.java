@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Transactional
-    @Query(value = "SELECT * FROM diccionario.usuarios WHERE nombre = :nombre", nativeQuery = true)
+    @Query(value = "SELECT * FROM diccionario.usuario WHERE nombre = :nombre", nativeQuery = true)
     Optional<Usuario> findTopByNombre(@Param("nombre") String nombre);
 
 }

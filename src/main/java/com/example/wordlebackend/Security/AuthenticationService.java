@@ -46,20 +46,14 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponseDTO login(LoginDTO loginDTO) {
-        UsuarioDTO user = usuarioService.getByUsername(loginDTO.getUsername());
+        UsuarioDTO user = usuarioService.getByUsername(loginDTO.getNombre());
 
-        Usuario usuario = usuarioRepository.findTopByNombre(loginDTO.getUsername())
+        Usuario usuario = usuarioRepository.findTopByNombre(loginDTO.getNombre())
                 .orElseThrow(() -> new RuntimeException("❌ Usuario no encontrado"));
 
         // 🔹 Verificar si el usuario está baneado
         String usuarioRol = String.valueOf(user.isEsAdmin());
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDTO.getUsername(),
-                        loginDTO.getPassword(),
-                        List.of(new SimpleGrantedAuthority(usuarioRol))
-                )
-        );
+
         String token = jwtService.generateToken(usuarioMapper.toEntity(user));
         return AuthenticationResponseDTO
                 .builder()
@@ -71,7 +65,7 @@ public class AuthenticationService {
     }
 
     public boolean verifyPassword(LoginDTO loginDTO) {
-        return usuarioService.existByCredentials(loginDTO.getUsername(), loginDTO.getPassword());
+        return usuarioService.existByCredentials(loginDTO.getNombre(), loginDTO.getContraseña());
 
     }
 

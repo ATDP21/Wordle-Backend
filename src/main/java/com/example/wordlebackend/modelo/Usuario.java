@@ -22,7 +22,7 @@ import java.util.*;
 public class Usuario  implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
 
   @Column(nullable = false, unique = true, length = 50)
   @EqualsAndHashCode.Include

@@ -25,3 +25,5 @@ insert  into palabras (id,palabra,sin_acentos,sensible) values (48291,'revén','
 
 
 DELETE FROM diccionario.palabras WHERE LENGTH(palabra) < 3;
+
+SELECT * FROM diccionario.palabras WHERE id >= (SELECT floor(random() * (SELECT max(id) FROM diccionario.palabras))) ORDER BY id LIMIT 1;

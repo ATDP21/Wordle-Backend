@@ -66,4 +66,13 @@ public class UsuarioService implements UserDetailsService {
         return usuario != null  && passwordEncoder.matches(password,usuario.getContraseña());
     }
 
+    public boolean credencialDisponible(String nombreUsuario) {
+
+        Usuario usuario = usuarioRepository.findTopByNombre(nombreUsuario).orElse(null);
+
+        if (usuario == null){
+            return true;
+        }
+        return false;
+    }
 }

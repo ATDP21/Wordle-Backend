@@ -8,6 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public class PalabraDTO {
-    String id;
+    Integer id;
     String palabra;
 }

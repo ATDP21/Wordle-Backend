@@ -14,15 +14,15 @@ public class Palabras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
-    @Column(name = "palabra")
+    @Column(name = "palabra", unique = true, length = 25)
     private String palabra;
 
-    @Column(name = "sin_acentos")
+    @Column(name = "sin_acentos", unique = true, length = 25)
     private String sinAcentos;
 
-    @Column(name = "sensible")
+    @Column(name = "sensible", unique = true, length = 25)
     private String sensible;
 
 

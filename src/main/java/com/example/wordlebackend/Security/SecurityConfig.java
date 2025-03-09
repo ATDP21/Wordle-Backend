@@ -32,7 +32,8 @@ public class SecurityConfig {
         req
           .requestMatchers(("/auth/**")).permitAll()
           .requestMatchers(GET, "/usuarios/**").permitAll()
-          .requestMatchers(GET, "/usuarios/banear").hasAnyAuthority("true")
+                .requestMatchers(GET, "/wordle/**").permitAll()
+                .requestMatchers(GET, "/usuarios/banear").hasAnyAuthority("true")
           .requestMatchers(GET, "/publicacion/eliminarPublicacion").permitAll()
           .requestMatchers(GET, "/publicacion/eliminarComentario").permitAll()
           .requestMatchers(GET, "/publicacion/**").permitAll()
