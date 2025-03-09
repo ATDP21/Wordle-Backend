@@ -1,34 +1,34 @@
-//package com.example.wordlebackend.controlador;
-//
-//import lombok.AllArgsConstructor;
-//import com.example.wordlebackend.DTO.AuthenticationResponseDTO;
-//import com.example.wordlebackend.DTO.LoginDTO;
-//import com.example.wordlebackend.DTO.RegistroDTO;
-//import org.example.diadp1backend.Security.AuthenticationService;
-//import com.example.wordlebackend.modelo.Usuario;
-//import org.example.diadp1backend.servicios.UsuarioService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.Map;
-//
-//@RestController
-//@RequestMapping("/auth")
-//@AllArgsConstructor
-//public class AuthController {
-//
-//  private UsuarioService usuarioService;
-//
-//  @Autowired
-//  private AuthenticationService authenticationService;
-//
-//  @PostMapping("/registro")
-//  public Usuario registro(@RequestBody RegistroDTO registroDTO){
-//
-//    return usuarioService.registrarUsuario(registroDTO);
-//  }
-//
+package com.example.wordlebackend.controlador;
+
+import lombok.AllArgsConstructor;
+import com.example.wordlebackend.DTO.AuthenticationResponseDTO;
+import com.example.wordlebackend.DTO.LoginDTO;
+import com.example.wordlebackend.DTO.RegistroDTO;
+import com.example.wordlebackend.Security.AuthenticationService;
+import com.example.wordlebackend.modelo.Usuario;
+import com.example.wordlebackend.servicio.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("/auth")
+@AllArgsConstructor
+public class AuthController {
+
+  private UsuarioService usuarioService;
+
+  @Autowired
+  private AuthenticationService authenticationService;
+
+  @PostMapping("/registro")
+  public Usuario registro(@RequestBody RegistroDTO registroDTO){
+
+    return usuarioService.registrarUsuario(registroDTO);
+  }
+
 //  @PostMapping("/login")
 //  public AuthenticationResponseDTO register(@RequestBody LoginDTO loginDTO){
 //    if(authenticationService.verifyPassword(loginDTO)){
@@ -93,7 +93,7 @@
 //      return ResponseEntity.badRequest().body("❌ Error al restablecer la contraseña.");
 //    }
 //  }
-//
-//
-//
-//}
+
+
+
+}
