@@ -3,9 +3,11 @@ package com.example.wordlebackend.servicio;
 import com.example.wordlebackend.DTO.AuthenticationResponseDTO;
 import com.example.wordlebackend.DTO.RegistroDTO;
 import com.example.wordlebackend.DTO.UsuarioDTO;
+import com.example.wordlebackend.DTO.UsuarioNombrePuntuacionDTO;
 import com.example.wordlebackend.converter.UsuarioMapper;
 import com.example.wordlebackend.modelo.Usuario;
 import com.example.wordlebackend.repositorio.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import com.example.wordlebackend.Security.JWTService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -74,5 +81,31 @@ public class UsuarioService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+    @Transactional
+    public UsuarioNombrePuntuacionDTO obtenerPerfilUsuarioLoggeado() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Token JWT no presente o mal formado");
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtService.extractTokenData(token).getUsername();
+
+        System.out.println("🔹 Usuario autenticado: " + username);
+
+        // Buscar usuario por nombre en la base de datos
+        Usuario usuario = usuarioRepository.findTopByNombre(username)
+                .orElseThrow(() -> new RuntimeException("❌ Usuario no encontrado"));
+
+        System.out.println("✅ Usuario encontrado: " + usuario.getNombre());
+
+
+        return new UsuarioNombrePuntuacionDTO(
+                usuario.getNombre(),
+                usuario.getPuntuacion()
+        );
     }
 }

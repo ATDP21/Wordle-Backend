@@ -65,7 +65,7 @@ public class AuthenticationService {
     }
 
     public boolean verifyPassword(LoginDTO loginDTO) {
-        return usuarioService.existByCredentials(loginDTO.getNombre(), loginDTO.getContraseña());
+        return usuarioService.existByCredentials(loginDTO.getNombre(), loginDTO.getContrasena());
 
     }
 
