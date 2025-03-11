@@ -31,7 +31,7 @@ public class SecurityConfig {
       .authorizeHttpRequests(req ->
         req
           .requestMatchers(("/auth/**")).permitAll()
-          .requestMatchers(GET, "/usuarios/**").permitAll()
+          .requestMatchers(GET, "/usuario/**").permitAll()
                 .requestMatchers(GET, "/wordle/**").permitAll()
                 .requestMatchers(GET, "/usuarios/banear").hasAnyAuthority("true")
           .requestMatchers(GET, "/publicacion/eliminarPublicacion").permitAll()

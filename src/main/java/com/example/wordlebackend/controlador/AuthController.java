@@ -39,8 +39,8 @@ public class AuthController {
   }
 
   @GetMapping("/credencialDisponible")
-  public boolean credencialDisponible(@RequestParam String nombreUsuario){
-    return usuarioService.credencialDisponible(nombreUsuario);
+  public boolean credencialDisponible(@RequestParam String usuario){
+    return usuarioService.credencialDisponible(usuario);
   }
 
 }

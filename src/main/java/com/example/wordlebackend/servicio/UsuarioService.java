@@ -132,4 +132,20 @@ public class UsuarioService implements UserDetailsService {
         usuario.setPuntuacion(usuario.getPuntuacion() + puntos);
         usuarioRepository.save(usuario);
     }
+
+    public UsuarioNombrePuntuacionDTO[] obtenerPodio() {
+        List<Usuario> usuarios = usuarioRepository.findTop3ByOrderByPuntuacionDesc();
+
+        UsuarioNombrePuntuacionDTO[] podio = new UsuarioNombrePuntuacionDTO[3];
+
+        for (int i = 0; i < 3; i++) {
+            Usuario usuario = usuarios.get(i);
+            podio[i] = new UsuarioNombrePuntuacionDTO(
+                    usuario.getNombre(),
+                    usuario.getPuntuacion()
+            );
+        }
+
+        return podio;
+    }
 }

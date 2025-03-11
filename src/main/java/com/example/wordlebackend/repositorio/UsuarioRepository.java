@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = "SELECT * FROM diccionario.usuario WHERE nombre = :nombre", nativeQuery = true)
     Optional<Usuario> findTopByNombre(@Param("nombre") String nombre);
 
+    @Transactional
+    @Query(value = "Select * from diccionario.usuario order by puntuacion desc limit 3", nativeQuery = true)
+    List<Usuario> findTop3ByOrderByPuntuacionDesc();
 }

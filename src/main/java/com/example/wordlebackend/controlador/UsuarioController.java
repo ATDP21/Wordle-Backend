@@ -22,5 +22,9 @@ public class UsuarioController {
     public void sumarPuntos(@PathVariable Integer puntos){
         perfilService.sumarPuntos(puntos);
     }
+    @GetMapping("/podio")
+    public UsuarioNombrePuntuacionDTO[] obtenerPodio(){
+        return perfilService.obtenerPodio();
+    }
 }
 
