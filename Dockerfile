@@ -28,5 +28,5 @@ RUN ls -l target/
 EXPOSE 8080
 
 # Ejecuta la aplicación
-CMD ["java", "-jar", "target/DI-AD-P1-Backend-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/Wordle-Backend-0.0.1-SNAPSHOT.jar"]
 
