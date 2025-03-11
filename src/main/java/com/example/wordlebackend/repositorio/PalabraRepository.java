@@ -18,6 +18,9 @@ public interface PalabraRepository extends JpaRepository<Palabras, String> {
             nativeQuery = true)
     Palabras findPalabraAleatoria(@Param("numLetras") int numLetras);
 
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END " +
+            "FROM Palabras p " +
+            "WHERE LOWER(p.palabra) = LOWER(:palabra)")
+    Boolean existsByPalabra(@Param("palabra") String palabra);
 
-    Boolean existsByPalabra(String palabra);
 }
