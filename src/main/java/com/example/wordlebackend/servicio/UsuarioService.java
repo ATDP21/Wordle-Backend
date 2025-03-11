@@ -108,4 +108,28 @@ public class UsuarioService implements UserDetailsService {
                 usuario.getPuntuacion()
         );
     }
+
+    @Transactional
+    public void sumarPuntos(Integer puntos) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Token JWT no presente o mal formado");
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtService.extractTokenData(token).getUsername();
+
+        System.out.println("🔹 Usuario autenticado: " + username);
+
+        // Buscar usuario por nombre en la base de datos
+        Usuario usuario = usuarioRepository.findTopByNombre(username)
+                .orElseThrow(() -> new RuntimeException("❌ Usuario no encontrado"));
+
+        System.out.println("✅ Usuario encontrado: " + usuario.getNombre());
+
+        usuario.setPuntuacion(usuario.getPuntuacion() + puntos);
+        usuarioRepository.save(usuario);
+    }
 }
