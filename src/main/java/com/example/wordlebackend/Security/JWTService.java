@@ -156,8 +156,6 @@ public class JWTService {
 
 
 
-  //Metodo que coge la clave secreta y ver si el token es válido
-
 
     //Metodo que sabe la clave de encriptación
   private Key getSignInKey() {

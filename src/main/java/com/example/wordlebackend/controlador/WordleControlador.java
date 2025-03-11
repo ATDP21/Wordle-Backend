@@ -24,4 +24,8 @@ public class WordleControlador {
     public ResponseEntity<PalabraDTO> obtenerPalabraIgnacianaAleatoria() {
         return ResponseEntity.ok(palabraService.getPalabraIgncianaAleatoria());
     }
+    @GetMapping("/palabraExiste/{palabra}")
+    public ResponseEntity<Boolean> palabraExiste(@PathVariable String palabra){
+        return ResponseEntity.ok(palabraService.palabraExiste(palabra));
+    }
 }
