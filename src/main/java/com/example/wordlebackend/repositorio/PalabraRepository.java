@@ -19,5 +19,5 @@ public interface PalabraRepository extends JpaRepository<Palabras, String> {
     Palabras findPalabraAleatoria(@Param("numLetras") int numLetras);
 
 
-
+    Boolean existsByPalabra(String palabra);
 }

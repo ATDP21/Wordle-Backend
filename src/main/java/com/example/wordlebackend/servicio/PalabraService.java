@@ -31,4 +31,8 @@ public class PalabraService {
         palabraDTO.setPalabra(palabra.getPalabra());
         return palabraDTO;
     }
+
+    public Boolean palabraExiste(String palabra) {
+        return palabraRepository.existsByPalabra(palabra);
+    }
 }
