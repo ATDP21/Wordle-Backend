@@ -30,3 +30,4 @@ EXPOSE 8080
 # Ejecuta la aplicación
 CMD ["java", "-jar", "target/Wordle-Backend-0.0.1-SNAPSHOT.jar"]
 
+
