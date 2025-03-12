@@ -23,4 +23,6 @@ public interface PalabraRepository extends JpaRepository<Palabras, String> {
             "WHERE LOWER(p.palabra) = LOWER(:palabra)")
     Boolean existsByPalabra(@Param("palabra") String palabra);
 
+
+    Boolean existsPalabrasBySinAcentos(String line);
 }

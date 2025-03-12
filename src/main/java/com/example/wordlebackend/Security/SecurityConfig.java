@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -46,6 +47,7 @@ public class SecurityConfig {
           .requestMatchers(("/auth/**")).permitAll()
           .requestMatchers(GET, "/usuario/**").permitAll()
                 .requestMatchers(GET, "/wordle/**").permitAll()
+                .requestMatchers(POST, "/wordle/**").permitAll()
                 .requestMatchers(GET, "/usuarios/banear").hasAnyAuthority("true")
           .requestMatchers(GET, "/publicacion/eliminarPublicacion").permitAll()
           .requestMatchers(GET, "/publicacion/eliminarComentario").permitAll()
