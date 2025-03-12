@@ -10,8 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -26,13 +31,23 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-      .cors(AbstractHttpConfigurer::disable)
-      .csrf(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(request -> {
+              CorsConfiguration config = new CorsConfiguration();
+              config.setAllowedOriginPatterns(List.of("https://wordle-frontend-6twl.onrender.com/",
+                      "https://localhost",
+                      "http://localhost:4200"));
+              config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+              config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+              config.setAllowCredentials(true);
+              return config;
+            }))
       .authorizeHttpRequests(req ->
         req
           .requestMatchers(("/auth/**")).permitAll()
           .requestMatchers(GET, "/usuario/**").permitAll()
                 .requestMatchers(GET, "/wordle/**").permitAll()
+                .requestMatchers(POST, "/wordle/**").permitAll()
                 .requestMatchers(GET, "/usuarios/banear").hasAnyAuthority("true")
           .requestMatchers(GET, "/publicacion/eliminarPublicacion").permitAll()
           .requestMatchers(GET, "/publicacion/eliminarComentario").permitAll()
