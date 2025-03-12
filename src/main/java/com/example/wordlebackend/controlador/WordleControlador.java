@@ -28,4 +28,8 @@ public class WordleControlador {
     public ResponseEntity<Boolean> palabraExiste(@PathVariable String palabra){
         return ResponseEntity.ok(palabraService.palabraExiste(palabra));
     }
+    @PostMapping("/introducirPalabras")
+    public void introducirPalabrasNuevas(){
+        palabraService.introducirPalabrasNuevas();
+    }
 }

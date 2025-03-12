@@ -20,4 +20,6 @@ public interface PalabraRepository extends JpaRepository<Palabras, String> {
 
 
     Boolean existsByPalabra(String palabra);
+
+    Boolean existsPalabrasBySinAcentos(String line);
 }
