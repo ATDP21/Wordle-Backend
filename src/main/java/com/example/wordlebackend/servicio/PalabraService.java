@@ -21,8 +21,11 @@ public class PalabraService {
     private final PalabraRepository palabraRepository;
     private final PalabraIgnacianaRepository palabraIgnacianaRepository;
 
-
+    // Hacer test si y no
     public PalabraDTO getPalabraAleatoria(Integer numLetras) {
+        if (numLetras < 4 || numLetras > 8) {
+            throw new IllegalArgumentException("El número de letras es inválido");
+        }
         Palabras palabra = palabraRepository.findPalabraAleatoria(numLetras);
 
         PalabraDTO palabraDTO = new PalabraDTO();

@@ -47,6 +47,8 @@ public class UsuarioService implements UserDetailsService {
     public UsuarioDTO save(UsuarioDTO usuarioDTO){
         return usuarioMapper.toDTO(usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO)));
     }
+
+    // Test
     public Usuario registrarUsuario(RegistroDTO dto){
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(dto.getUsuario());
@@ -108,7 +110,7 @@ public class UsuarioService implements UserDetailsService {
                 usuario.getPuntuacion()
         );
     }
-
+    // Prueba si o no
     @Transactional
     public void sumarPuntos(Integer puntos) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -125,27 +127,36 @@ public class UsuarioService implements UserDetailsService {
 
         // Buscar usuario por nombre en la base de datos
         Usuario usuario = usuarioRepository.findTopByNombre(username)
-                .orElseThrow(() -> new RuntimeException("❌ Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado o no iniciado"));
 
         System.out.println("✅ Usuario encontrado: " + usuario.getNombre());
-
+        if (puntos < 0) {
+            throw new IllegalArgumentException("El número de puntos no puede ser negativo");
+        }
         usuario.setPuntuacion(usuario.getPuntuacion() + puntos);
         usuarioRepository.save(usuario);
     }
 
-    public UsuarioNombrePuntuacionDTO[] obtenerPodio() {
-        List<Usuario> usuarios = usuarioRepository.findTop3ByOrderByPuntuacionDesc();
 
-        UsuarioNombrePuntuacionDTO[] podio = new UsuarioNombrePuntuacionDTO[3];
+   // Test de si tiene usuarios o no
+   @Transactional
+   public UsuarioNombrePuntuacionDTO[] obtenerPodio() {
+       List<Usuario> usuarios = usuarioRepository.findTop3ByOrderByPuntuacionDesc();
 
-        for (int i = 0; i < 3; i++) {
-            Usuario usuario = usuarios.get(i);
-            podio[i] = new UsuarioNombrePuntuacionDTO(
-                    usuario.getNombre(),
-                    usuario.getPuntuacion()
-            );
-        }
+       UsuarioNombrePuntuacionDTO[] podio = new UsuarioNombrePuntuacionDTO[3];
 
-        return podio;
-    }
+       for (int i = 0; i < 3; i++) {
+           if (i < usuarios.size()) {
+               Usuario usuario = usuarios.get(i);
+               podio[i] = new UsuarioNombrePuntuacionDTO(
+                       usuario.getNombre(),
+                       usuario.getPuntuacion()
+               );
+           } else {
+               podio[i] = new UsuarioNombrePuntuacionDTO("", 0);
+           }
+       }
+       return podio;
+   }
+
 }
